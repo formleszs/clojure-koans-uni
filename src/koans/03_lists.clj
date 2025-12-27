@@ -1,45 +1,70 @@
-(ns koans.03-lists
-  (:require [koan-engine.core :refer :all]))
+(ns koans.02-strings
+  (:require [koan-engine.core :refer :all]
+            [clojure.string :as string]))
 
 (meditations
-  "Lists can be expressed by function or a quoted form"
-  (= '(__ __ __ __ __) (list 1 2 3 4 5))
+  "A string is nothing more than text surrounded by double quotes"
+  (= "hello" "hello")
 
-  "They are Clojure seqs (sequences), so they allow access to the first"
-  (= __ (first '(1 2 3 4 5)))
+  "But double quotes are just magic on top of something deeper"
+  (= "world" (str 'world))
 
-  "As well as the rest"
-  (= __ (rest '(1 2 3 4 5)))
+  "You can do more than create strings, you can put them together"
+  (= "Cool right?" (str '"Cool right?"))
 
-  "Count your blessings"
-  (= __ (count '(dracula dooku chocula)))
+  "You can even get certain characters"
+  (= \C (get "Characters" 0))
 
-  "Before they are gone"
-  (= __ (count '()))
+  "Or even count the characters"
+  (= 11 (count "Hello World"))
 
-  "The rest, when nothing is left, is empty"
-  (= __ (rest '(100)))
+  "But strings and characters are not the same"
+  (= false (= \c "c"))
 
-  "Construction by adding an element to the front is easy"
-  (= __ (cons :a '(:b :c :d :e)))
+  "What if you only wanted to get part of a string?"
+  (= "World" (subs "Hello World" 6 11))
 
-  "Conjoining an element to a list isn't hard either"
-  (= __ (conj '(:a :b :c :d) :e))
+  "How about joining together elements in a list?"
+  (= "123" (clojure.string/join '(1 2 3)))
 
-  "You can use a list like a stack to get the first element"
-  (= __ (peek '(:a :b :c :d :e)))
+  "What if you wanted to separate them out?"
+  (= "1, 2, 3" (clojure.string/join ", " '(1 2 3)))
 
-  "Or the others"
-  (= __ (pop '(:a :b :c :d :e)))
+  "Maybe you want to separate out all your lines"
+  (= ["1" "2" "3"] (clojure.string/split-lines "1\n2\n3"))
 
-  "But watch out if you try to pop nothing"
-  (= __ (try
-          (pop '())
-          (catch IllegalStateException e
-            "No dice!")))
+  "You may want to make sure your words are backwards"
+  (= "olleh" (string/reverse "hello"))
 
-  "The rest of nothing isn't so strict"
-  (= __ (try
-          (rest '())
-          (catch IllegalStateException e
-            "No dice!"))))
+  "Maybe you want to find the index of the first occurrence of a substring"
+  (= 0 (string/index-of "hello world" \h))
+
+  "Or maybe the last index of the same substring"
+  (= 13 (string/last-index-of "hello world, hello" "hello"))
+
+  "But when something doesn't exist, nothing is found"
+  (= nil (string/index-of "hello world" "bob"))
+
+  "Sometimes you don't want whitespace cluttering the front and back"
+  (= "hello world" (string/trim "  \nhello world \t \n"))
+
+  "You can check if something is a char"
+  (= true (char? \c))
+
+  "But it may not be"
+  (= false (char? "a"))
+
+  "But chars aren't strings"
+  (= false (string? \b))
+
+  "Strings are strings"
+  (= true (string? "string"))
+
+  "Some strings may be blank"
+  (= true (string/blank? ""))
+
+  "Even if at first glance they aren't"
+  (= true (string/blank? " \n \t  "))
+
+  "However, most strings aren't blank"
+  (= false (string/blank? "hello?\nare you out there?")))
