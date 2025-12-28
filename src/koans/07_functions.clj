@@ -17,7 +17,7 @@
   (= 10 ((fn [n] (* 5 n)) 2))
 
   "Or using an even shorter syntax"
-  (= __ (#(* 15 %) 4))
+  (= 60 (#(* 15 %) 4))
 
   "Even anonymous functions may take multiple arguments"
   (= 15 (#(+ %1 %2 %3) 4 5 6))
